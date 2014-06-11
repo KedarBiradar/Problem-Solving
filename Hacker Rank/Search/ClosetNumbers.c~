@@ -1,0 +1,15 @@
+#include <stdio.h>
+
+int main()
+{
+
+	long int n;
+	scanf("%ld",&n);
+	long long int arr[n];
+
+	for(i=0;i<n;i+=2)
+	{
+		scanf("%lld",arr[i]);
+	}
+	return 0;
+}

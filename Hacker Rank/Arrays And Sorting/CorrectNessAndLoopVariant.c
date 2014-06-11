@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+#include <assert.h>
+#include <stddef.h>
+void insertionSort(int ar_size, long long int *  ar)
+ {    
+    int i,j;
+    long long int value,noOfShifts=0;
+    for(i=1;i<ar_size;i++)
+    {
+        value=ar[i];
+        j=i-1;
+        while(j>=0 && value<ar[j])
+        {
+            ar[j+1]=ar[j];
+            j--;
+	    noOfShifts++;
+        }
+        ar[j+1]=value;       
+	/*    for(j=0;j<ar_size;j++)
+		{
+		    printf("%d",ar[j]);
+		    printf(" ");
+		}
+		printf("\n");*/
+    }
+	printf("%lld\n",noOfShifts);
+}
+
+void countShifts(int n,int * array)
+{
+	
+
+}
+int main(void) 
+{   
+   int _ar_size,t;
+scanf("%d",&t);
+while(t>0)
+{
+	scanf("%d", &_ar_size);
+	long long int _ar[_ar_size], _ar_i;
+	for(_ar_i = 0; _ar_i < _ar_size; _ar_i++) 
+	{ 
+	   scanf("%lld", &_ar[_ar_i]); 
+	}
+
+insertionSort(_ar_size, _ar);
+   t--;
+}
+   return 0;
+}
+
