@@ -1,0 +1,125 @@
+#include <cstdio>
+#include <limits.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define si(n) scanf("%d",&n)
+#define pfn(n) printf("%d\n",n)
+#define FOR(i,n) for(i=0;i<n;i++)
+
+using namespace std;
+
+int lastDigit(int n,int p)
+{
+
+
+ int B[10][5]={0,0,0,0,0,
+      0,0,0,0,0,
+      6,2,4,8,4,
+      1,3,9,7,4,
+      6,4,0,0,2,
+      0,0,0,0,0,
+      0,0,0,0,0,
+      1,7,9,3,4,
+      6,8,4,2,4,
+      1,9,0,0,2,};
+
+		int k;
+    		k=n%B[p][4];
+		//printf("%d\n",B[p][k]);
+    		return (B[p][k]);
+}
+
+	char array[1000010];
+int main()
+{
+
+	int digit=0;
+/*
+	char ch,ch1,ch2;
+
+
+	ch2=ch1=ch='a';
+	while(ch!='\n')
+	{
+		ch2=ch1;
+		ch1=ch;
+		//ch=getchar();
+		scanf("%c",&ch);		
+	}
+	
+	int digit=0;
+	if(ch2!='a')
+		digit+=(ch2-48)*10;
+
+	digit+=ch1-48;
+
+*/
+	scanf("%s",array);
+	int len=strlen(array);
+	if(len==1)
+		digit+=array[0]-48;
+	else
+	{
+		digit+=(array[len-2]-48)*10;
+		digit+=array[len-1]-48;
+	}
+/*	int sum=1;
+	for(i=2;i<5;i++)
+	{
+		sum+=lastDigit(digit,i);	
+	}
+	printf("%d\n",sum%5);
+*/
+	if(digit%4==0)
+		printf("4\n");
+	else
+		printf("0\n");
+	return 0;
+}
+
+/*
+#include <stdio.h>
+#include <cstring>
+int main()
+{
+ int B[10][5]={0,0,0,0,0,
+      0,0,0,0,0,
+      6,2,4,8,4,
+      1,3,9,7,4,
+      6,4,0,0,2,
+      0,0,0,0,0,
+      0,0,0,0,0,
+      1,7,9,3,4,
+      6,8,4,2,4,
+      1,9,0,0,2,};
+ int t;
+ scanf("%d",&t);
+ while(t--)
+ {
+  char A[1005];
+  unsigned long long p;
+  scanf("%s",A);
+  scanf("%llu",&p);
+  int len=strlen(A),temp,k;
+  if(p==0)
+   printf("1\n");
+  else{
+   temp=A[len-1]-48;
+   if(temp==0)
+    printf("0\n");
+   else if(temp==1)
+    printf("1\n");
+   else if(temp==5)
+    printf("5\n");
+   else if(temp==6)
+    printf("6\n");
+   else{
+    k=p%B[temp][4];
+    printf("%d\n",B[temp][k]);
+   }
+  }
+ }
+}
+*/
+

@@ -1,0 +1,106 @@
+#include <cstdio>
+#include <cstring>
+#include <climits>
+#include <iostream>
+#include <vector>
+#include <map>
+#include <algorithm>
+
+using namespace std;
+
+struct tuple
+{
+	string val;
+	int c;
+//	tuple(_v,_c){ val(_v), c(_c)};
+};
+int main()
+{
+	int n;
+	string str;
+	scanf("%d",&n);
+	vector<string>tokens;
+	map<string,int>all_freq;
+	for(int i=0;i<n;i++)
+	{
+		cin>>str;
+		transform(str.begin(), str.end(), str.begin(), ::tolower);
+		int c=count(str.begin(),str.end(),'r');
+		all_freq.insert(pair<string,int>(str,c));
+		tokens.push_back(str);
+	}
+
+	int d;
+	scanf("%d",&d);
+	string key,val;
+	map < string,string > dict;
+	map< string,int>freq;
+	int c=0;
+	for(int j=0;j<d;j++)
+	{
+		cin>>key>>val;
+		c=0;
+		transform(key.begin(), key.end(), key.begin(), ::tolower);
+		transform(val.begin(), val.end(), val.begin(), ::tolower);
+		c=count(val.begin(),val.end(),'r');
+		dict.insert(pair<string,string>(key,val));
+		freq.insert(pair<string,int>(key,c));
+	}
+
+	vector<string>::iterator it;
+	map<string,string>::iterator it1;
+	map<string,int>::iterator it2;
+/*	for(it=tokens.begin();it!=tokens.end();it++)
+	{
+		cout<<*it<<endl;
+	}
+
+	for(it1=dict.begin();it1!=dict.end();it1++)
+	{
+		cout<<it1->first<<","<<it1->second<<endl;
+	}
+		cout<<"reduction start\n";
+*/
+	for(it=tokens.begin();it!=tokens.end();)
+	{
+		int rc=0;
+		string ss=*it;
+		it1=dict.find(ss);
+		if(it1!=dict.end())
+		{
+			string str=it1->second;
+			rc=count(ss.begin(),ss.end(),'r');
+			int c=freq.find(ss)->second;
+			if(rc>c || (rc==c && ss.length() > str.length()))
+			{
+				tokens.erase(it);
+				it=tokens.begin();
+				tokens.push_back(str);		
+			}
+			else
+				it++;
+		}
+		else 
+			it++;
+
+//		cout<<*it;
+/*		for(vector<string>::iterator i=tokens.begin();i!=tokens.end();i++)
+		{
+			cout<<*i<<"\t";
+		}
+		cout<<endl;
+*/
+	}
+	int res=0,ans=0;
+	for(it=tokens.begin();it!=tokens.end();it++)
+	{
+		int rc=0;
+		string ss=*it;
+		rc=count(ss.begin(),ss.end(),'r');
+		res+=rc;
+		ans+=ss.length();
+		//cout<<*it<<endl;
+	}
+	cout<<res<<" "<<ans<<endl;
+	return 0;
+}

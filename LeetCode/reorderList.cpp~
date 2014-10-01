@@ -1,0 +1,147 @@
+#include <cstdio>
+#include <stdlib.h>
+#include <stack>
+using namespace std;
+
+ struct ListNode 
+{
+      int val;
+      ListNode *next;
+	 ListNode(int x) : val(x), next(NULL) {}
+};
+
+ListNode * cn(int data)
+{
+	ListNode * tmp=(ListNode*)malloc(sizeof(ListNode));
+	tmp->val=data;
+	tmp->next=NULL;
+	return tmp;
+}
+
+void printList(ListNode *head)
+{
+	while(head)
+	{
+		printf("%d\t",head->val);
+		head=head->next;
+	}
+	printf("\n");
+}
+
+ListNode * secondLastNode(ListNode *head)
+{
+	while(head->next->next!=NULL)
+		head=head->next;
+	return head;
+}
+void reorder(ListNode *head)
+{
+
+	if(head==NULL || head->next==NULL || head->next->next==NULL)
+		return;
+
+	ListNode * curr,*secondLast,*last,*tmp;
+
+	curr=head;
+	secondLast=secondLastNode(head);
+	last=secondLast->next;
+
+	while(curr!=secondLast  )
+	{
+		secondLast->next=NULL;
+		tmp=curr->next;
+		curr->next=last;
+		last->next=tmp;
+		curr=curr->next->next;
+		if(curr==secondLast)
+			break;
+		secondLast=secondLastNode(curr);
+		last=secondLast->next;
+	}
+}
+
+void reorderList1(ListNode *head)
+{
+	if(head==NULL || head->next==NULL || head->next->next==NULL)
+		return;
+
+	stack<ListNode *> stk;
+	ListNode * curr=head;
+	int count=0,size=0;
+	while(curr)
+	{
+		size++;
+		stk.push(curr);
+		curr=curr->next;
+	}
+	curr=head;
+	while(count<size/2)
+	{
+		ListNode *tmp=curr->next;
+		curr->next=stk.top();
+		curr->next->next=tmp;
+		curr=tmp;
+		stk.pop();
+		count++;
+	}
+	curr->next=NULL;
+}
+
+ListNode * merge(ListNode *res,ListNode *b)
+{
+	ListNode * a=res,*tmp;
+	if(!a)
+		return b;
+	if(!b)
+		return a;
+	while(a && b)
+	{
+		tmp=b;
+		b=b->next;
+		tmp->next=a->next;
+		a->next=tmp;
+		a=a->next->next;
+	}
+	return res;
+}
+void reorderList2(ListNode *head)
+{
+	if(head==NULL || head->next==NULL || head->next->next==NULL)
+		return;
+	ListNode * fp=head,*sp=head;
+	while(fp->next && fp->next->next)
+	{
+		fp=fp->next->next;
+		sp=sp->next;
+	}
+	ListNode * second=sp->next;
+	sp->next=NULL;
+	ListNode *tmp=NULL,*itr=second,*nn;
+	while(itr)
+	{
+		nn=itr->next;
+		itr->next=tmp;
+		tmp=itr;
+		itr=nn;
+	}
+	second=tmp;
+
+	head=merge(head,second);
+}
+
+
+int main()
+{
+	int i;
+	ListNode *head=cn(1);
+	ListNode *curr=head;
+	for(i=2;i<11;i++)
+	{
+		curr->next=cn(i);
+		curr=curr->next;
+	}
+	printList(head);
+	reorderList2(head);
+	printList(head);
+
+}

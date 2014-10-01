@@ -14,7 +14,7 @@ void calmax(int * expr,char * sign,int n)
 	for(i=0;i<=n;i++)
 		min_cost[i][i]=cost[i][i]=expr[i];
 
-	for(l=2;l<n+1;l++)		//length of chain
+	for(l=2;l<n+1;l++)
 	{
 		for(i=0;i<n-l+1;i++)
 		{
